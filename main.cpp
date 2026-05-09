@@ -1,7 +1,7 @@
-#include <stdio.h>
+#include <cstdio>
 
 int main()
 {
-    fprintf(stdout, "hello, world\n");
+    std::fprintf(stdout, "hello, world\n");
     return 0;
 }
