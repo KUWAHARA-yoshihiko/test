@@ -64,8 +64,8 @@ name: Orin Nano Build CI
 on:
   push:
     branches: [ "main" ]
-   pull_request:
-     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   # prepare ステージに相当
