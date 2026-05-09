@@ -1,7 +1,31 @@
-name: CI Example
+# name: CI Example
+# 
+# on:
+#   push:
+#     branches: [ "main" ]
+# 
+# jobs:
+#   # prepare ステージに相当
+#   prepare-job:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Prepare step
+#         run: echo "Prepare before echo-job..."
+# 
+#   # echo ステージに相当
+#   echo-job:
+#     runs-on: ubuntu-latest
+#     needs: prepare-job  # ここで prepare-job の完了を待つように指定
+#     steps:
+#       - name: Echo step
+#         run: echo "Ahoy! This is GitHub Actions!"
+#
+name: C++ Build and Run CI
 
 on:
   push:
+    branches: [ "main" ]
+  pull_request:
     branches: [ "main" ]
 
 jobs:
@@ -12,10 +36,21 @@ jobs:
       - name: Prepare step
         run: echo "Prepare before echo-job..."
 
-  # echo ステージに相当
-  echo-job:
+  # build ステージに相当
+  build-and-run:
     runs-on: ubuntu-latest
-    needs: prepare-job  # ここで prepare-job の完了を待つように指定
+    needs: prepare-job  # prepare-job が成功した後に実行（ステージの順序制御）
+
+    # GitLabの 'image: gcc:latest' に相当する設定
+    container:
+      image: gcc:latest
+
     steps:
-      - name: Echo step
-        run: echo "Ahoy! This is GitHub Actions!"
+      - name: Checkout code
+        uses: actions/checkout@v4  # リポジトリのコードを取得するために必要
+
+      - name: Compile C++ code
+        run: g++ main.cpp -o main
+
+      - name: Execute program
+        run: ./main
