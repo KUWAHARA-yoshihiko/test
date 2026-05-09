@@ -64,6 +64,8 @@ name: Orin Nano Build CI
 on:
   push:
     branches: [ "main" ]
+   pull_request:
+     branches: [ "main" ]
 
 jobs:
   # prepare ステージに相当
@@ -84,6 +86,6 @@ jobs:
 
       - name: Compile and Run on ARM board
         run: |
-          echo "ARMボード上でコンパイルを開始します"
+          echo "Compilation will begin on OrinNano."
           g++ main.cpp -o main
           ./main
